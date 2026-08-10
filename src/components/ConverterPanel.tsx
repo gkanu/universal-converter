@@ -5,6 +5,7 @@ import {
   getCategory,
   getUnit,
   type CategoryId,
+  type NotationMode,
 } from '../lib/units'
 import type { HistoryEntry } from '../hooks/useHistory'
 import { UnitSelect } from './UnitSelect'
@@ -19,6 +20,7 @@ export function ConverterPanel({ categoryId, onConvert }: ConverterPanelProps) {
   const [fromUnitId, setFromUnitId] = useState(category.units[0].id)
   const [toUnitId, setToUnitId] = useState(category.units[1]?.id ?? category.units[0].id)
   const [inputValue, setInputValue] = useState('1')
+  const [notation, setNotation] = useState<NotationMode>('standard')
 
   useEffect(() => {
     setFromUnitId(category.units[0].id)
@@ -30,7 +32,7 @@ export function ConverterPanel({ categoryId, onConvert }: ConverterPanelProps) {
   const result = Number.isFinite(numericValue)
     ? convert(numericValue, categoryId, fromUnitId, toUnitId)
     : NaN
-  const formatted = formatResult(result)
+  const formatted = formatResult(result, notation)
 
   useEffect(() => {
     if (!Number.isFinite(numericValue) || !Number.isFinite(result) || inputValue === '') return
@@ -122,9 +124,38 @@ export function ConverterPanel({ categoryId, onConvert }: ConverterPanelProps) {
       </div>
 
       <div className="mt-8 rounded-2xl bg-gradient-to-br from-brand-500/10 to-cyan-500/10 p-6 dark:from-brand-500/15 dark:to-cyan-500/15">
-        <p className="mb-1 text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
-          Result
-        </p>
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            Result
+          </p>
+          <div
+            className="inline-flex rounded-xl border border-slate-200/80 bg-white/60 p-1 dark:border-slate-700/60 dark:bg-slate-900/50"
+            role="group"
+            aria-label="Output notation"
+          >
+            {(
+              [
+                ['standard', 'Standard'],
+                ['scientific', 'Scientific'],
+                ['engineering', 'Engineering'],
+              ] as const
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setNotation(value)}
+                className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition sm:px-3 ${
+                  notation === value
+                    ? 'bg-brand-600 text-white shadow-sm'
+                    : 'text-slate-500 hover:bg-white/80 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100'
+                }`}
+                aria-pressed={notation === value}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
         <p className="break-all text-3xl font-bold tracking-tight text-brand-700 dark:text-brand-400 sm:text-4xl">
           {formatted}
           <span className="ml-2 text-xl font-semibold text-slate-500 dark:text-slate-400">

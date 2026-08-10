@@ -26,6 +26,8 @@ export interface Category {
   isTemperature?: boolean
 }
 
+export type NotationMode = 'standard' | 'scientific' | 'engineering'
+
 const length: Category = {
   id: 'length',
   label: 'Length',
@@ -274,13 +276,41 @@ export function convert(
   return base / to.factor
 }
 
-export function formatResult(value: number): string {
+function formatExponent(exponent: number): string {
+  return `${exponent >= 0 ? '+' : ''}${exponent}`
+}
+
+function formatScientific(value: number): string {
+  const [rawCoefficient, rawExponent] = value.toExponential(6).split('e')
+  const coefficient = rawCoefficient.replace(/\.?0+$/, '')
+  return `${coefficient}e${formatExponent(Number(rawExponent))}`
+}
+
+function formatEngineering(value: number): string {
+  let exponent = Math.floor(Math.log10(Math.abs(value)) / 3) * 3
+  let coefficient = Number((value / 10 ** exponent).toPrecision(7))
+
+  if (Math.abs(coefficient) >= 1000) {
+    coefficient /= 1000
+    exponent += 3
+  }
+
+  return `${coefficient}e${formatExponent(exponent)}`
+}
+
+export function formatResult(value: number, notation: NotationMode = 'standard'): string {
   if (!Number.isFinite(value)) return '—'
   if (value === 0) return '0'
 
+  if (notation === 'scientific') return formatScientific(value)
+  if (notation === 'engineering') return formatEngineering(value)
+
   const abs = Math.abs(value)
   if (abs >= 1e12 || (abs < 1e-6 && abs > 0)) {
-    return value.toExponential(6).replace(/\.?0+e/, 'e')
+    return new Intl.NumberFormat('en-US', {
+      useGrouping: false,
+      maximumSignificantDigits: 12,
+    }).format(value)
   }
 
   const decimals = abs >= 1000 ? 2 : abs >= 1 ? 4 : abs >= 0.01 ? 6 : 8
