@@ -18,19 +18,155 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, oklch(0.78 0.1 195 / 0.28), transparent),
-    radial-gradient(ellipse 60% 50% at 100% 50%, oklch(0.75 0.12 170 / 0.18), transparent),
-    radial-gradient(ellipse 50% 40% at 0% 80%, oklch(0.8 0.08 220 / 0.12), transparent),
-    oklch(0.98 0.008 195);
+  background: oklch(0.975 0.012 190);
 }
 
 .dark body {
-  background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, oklch(0.38 0.1 195 / 0.35), transparent),
-    radial-gradient(ellipse 60% 50% at 100% 50%, oklch(0.32 0.12 170 / 0.22), transparent),
-    radial-gradient(ellipse 50% 40% at 0% 80%, oklch(0.28 0.08 220 / 0.15), transparent),
-    oklch(0.14 0.015 240);
+  background: oklch(0.15 0.016 230);
+}
+
+.instrument-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.floating-instrument {
+  position: absolute;
+  color: oklch(0.52 0.105 190 / 0.14);
+  filter: drop-shadow(0 12px 22px oklch(0.35 0.06 200 / 0.08));
+  animation: instrument-float 9s ease-in-out infinite;
+}
+
+.floating-instrument svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dark .floating-instrument {
+  color: oklch(0.74 0.105 190 / 0.12);
+  filter: drop-shadow(0 12px 26px oklch(0 0 0 / 0.16));
+}
+
+.instrument-ruler {
+  top: 5%;
+  left: -1.5rem;
+  width: 9rem;
+  height: 9rem;
+  animation-delay: -2s;
+}
+
+.instrument-thermometer {
+  top: 8%;
+  right: 3%;
+  width: 7.5rem;
+  height: 7.5rem;
+  transform: rotate(8deg);
+  animation-delay: -5s;
+}
+
+.instrument-scale {
+  top: 36%;
+  left: 2%;
+  width: 8.5rem;
+  height: 8.5rem;
+  animation-delay: -7s;
+}
+
+.instrument-cup {
+  top: 46%;
+  right: 1%;
+  width: 8rem;
+  height: 8rem;
+  transform: rotate(7deg);
+  animation-delay: -3s;
+}
+
+.instrument-protractor {
+  bottom: 3%;
+  left: 5%;
+  width: 9.5rem;
+  height: 9.5rem;
+  transform: rotate(-6deg);
+  animation-delay: -6s;
+}
+
+.instrument-stopwatch {
+  bottom: 5%;
+  right: 6%;
+  width: 8.5rem;
+  height: 8.5rem;
+  animation-delay: -1s;
+}
+
+.instrument-tape {
+  top: 20%;
+  left: 16%;
+  width: 6.5rem;
+  height: 6.5rem;
+  animation-delay: -8s;
+}
+
+.instrument-caliper {
+  bottom: 21%;
+  right: 16%;
+  width: 7rem;
+  height: 7rem;
+  animation-delay: -4s;
+}
+
+@keyframes instrument-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .floating-instrument {
+    color: oklch(0.52 0.105 190 / 0.1);
+  }
+
+  .dark .floating-instrument {
+    color: oklch(0.74 0.105 190 / 0.09);
+  }
+
+  .instrument-tape,
+  .instrument-caliper {
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .instrument-scale,
+  .instrument-cup {
+    display: none;
+  }
+
+  .instrument-ruler,
+  .instrument-protractor {
+    left: -3.25rem;
+  }
+
+  .instrument-thermometer,
+  .instrument-stopwatch {
+    right: -2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-instrument {
+    animation: none;
+  }
 }
 
 input[type="number"]::-webkit-inner-spin-button,

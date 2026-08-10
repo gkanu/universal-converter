@@ -6,6 +6,7 @@ import { CategoryTabs } from './components/CategoryTabs'
 import { ConverterPanel } from './components/ConverterPanel'
 import { HistoryPanel } from './components/HistoryPanel'
 import { ThemeToggle } from './components/ThemeToggle'
+import { InstrumentBackground } from './components/InstrumentBackground'
 
 export default function App() {
   const [categoryId, setCategoryId] = useState<CategoryId>('length')
@@ -20,8 +21,10 @@ export default function App() {
   )
 
   return (
-    <div className="min-h-dvh text-slate-900 dark:text-slate-100">
-      <header className="mx-auto flex max-w-4xl items-center justify-between px-4 py-6 sm:px-6">
+    <div className="relative isolate min-h-dvh overflow-hidden text-slate-900 dark:text-slate-100">
+      <InstrumentBackground />
+
+      <header className="relative z-10 mx-auto flex max-w-4xl items-center justify-between px-4 py-6 sm:px-6">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-600 text-lg font-bold text-white shadow-lg shadow-brand-500/25">
             ⇄
@@ -49,7 +52,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 pb-16 sm:px-6">
+      <main className="relative z-10 mx-auto max-w-4xl px-4 pb-16 sm:px-6">
         <div className="mb-6">
           <CategoryTabs categories={categories} active={categoryId} onChange={setCategoryId} />
         </div>
