@@ -10,7 +10,7 @@ import { InstrumentBackground } from './components/InstrumentBackground'
 
 export default function App() {
   const [categoryId, setCategoryId] = useState<CategoryId>('length')
-  const { mode, cycleTheme } = useTheme()
+  const { mode, setTheme } = useTheme()
   const { entries, addEntry, clearHistory, removeEntry, isOpen, setIsOpen } = useHistory()
 
   const handleConvert = useCallback(
@@ -48,7 +48,7 @@ export default function App() {
               </span>
             )}
           </button>
-          <ThemeToggle mode={mode} onCycle={cycleTheme} />
+          <ThemeToggle mode={mode} onChange={setTheme} />
         </div>
       </header>
 

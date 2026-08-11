@@ -13,16 +13,92 @@
 
 html {
   font-family: var(--font-sans);
+  --page-background: oklch(0.975 0.012 190);
+  --instrument-color: oklch(0.52 0.105 190 / 0.14);
+  --instrument-shadow: oklch(0.35 0.06 200 / 0.08);
+}
+
+html.dark {
+  --page-background: oklch(0.15 0.016 230);
+  --instrument-color: oklch(0.74 0.105 190 / 0.12);
+  --instrument-shadow: oklch(0 0 0 / 0.16);
 }
 
 body {
   margin: 0;
   min-height: 100dvh;
-  background: oklch(0.975 0.012 190);
+  background: var(--page-background);
+  transition: background 240ms ease, color 240ms ease;
 }
 
-.dark body {
-  background: oklch(0.15 0.016 230);
+html[data-theme="ocean"] {
+  --color-brand-400: oklch(0.76 0.13 225);
+  --color-brand-500: oklch(0.67 0.16 235);
+  --color-brand-600: oklch(0.57 0.18 245);
+  --color-brand-700: oklch(0.48 0.16 250);
+  --color-brand-950: oklch(0.2 0.07 245);
+  --page-background: radial-gradient(circle at 20% 0%, oklch(0.28 0.08 235), transparent 38%), oklch(0.14 0.035 245);
+  --instrument-color: oklch(0.76 0.13 225 / 0.14);
+}
+
+html[data-theme="forest"] {
+  --color-brand-400: oklch(0.75 0.14 145);
+  --color-brand-500: oklch(0.65 0.16 145);
+  --color-brand-600: oklch(0.54 0.15 145);
+  --color-brand-700: oklch(0.45 0.13 145);
+  --color-brand-950: oklch(0.22 0.05 145);
+  --page-background: radial-gradient(circle at 15% 0%, oklch(0.91 0.08 140), transparent 36%), oklch(0.97 0.018 135);
+  --instrument-color: oklch(0.48 0.12 145 / 0.14);
+}
+
+html[data-theme="sunset"] {
+  --color-brand-400: oklch(0.75 0.17 45);
+  --color-brand-500: oklch(0.67 0.2 38);
+  --color-brand-600: oklch(0.58 0.21 32);
+  --color-brand-700: oklch(0.49 0.18 28);
+  --color-brand-950: oklch(0.23 0.07 28);
+  --page-background: radial-gradient(circle at 78% 0%, oklch(0.91 0.09 55), transparent 38%), oklch(0.98 0.018 65);
+  --instrument-color: oklch(0.57 0.16 38 / 0.14);
+}
+
+html[data-theme="lavender"] {
+  --color-brand-400: oklch(0.76 0.13 295);
+  --color-brand-500: oklch(0.67 0.16 295);
+  --color-brand-600: oklch(0.57 0.18 295);
+  --color-brand-700: oklch(0.49 0.16 295);
+  --color-brand-950: oklch(0.22 0.07 295);
+  --page-background: radial-gradient(circle at 18% 0%, oklch(0.92 0.07 300), transparent 38%), oklch(0.975 0.014 290);
+  --instrument-color: oklch(0.57 0.14 295 / 0.14);
+}
+
+html[data-theme="rose"] {
+  --color-brand-400: oklch(0.76 0.14 355);
+  --color-brand-500: oklch(0.67 0.18 355);
+  --color-brand-600: oklch(0.57 0.2 355);
+  --color-brand-700: oklch(0.49 0.17 355);
+  --color-brand-950: oklch(0.22 0.07 355);
+  --page-background: radial-gradient(circle at 82% 0%, oklch(0.92 0.07 355), transparent 38%), oklch(0.98 0.014 350);
+  --instrument-color: oklch(0.58 0.14 355 / 0.13);
+}
+
+html[data-theme="amber"] {
+  --color-brand-400: oklch(0.81 0.15 78);
+  --color-brand-500: oklch(0.72 0.17 70);
+  --color-brand-600: oklch(0.61 0.16 62);
+  --color-brand-700: oklch(0.51 0.14 58);
+  --color-brand-950: oklch(0.23 0.06 55);
+  --page-background: radial-gradient(circle at 25% 0%, oklch(0.93 0.08 85), transparent 38%), oklch(0.98 0.016 90);
+  --instrument-color: oklch(0.58 0.13 70 / 0.14);
+}
+
+html[data-theme="midnight"] {
+  --color-brand-400: oklch(0.73 0.14 275);
+  --color-brand-500: oklch(0.64 0.17 275);
+  --color-brand-600: oklch(0.55 0.2 275);
+  --color-brand-700: oklch(0.47 0.18 275);
+  --color-brand-950: oklch(0.19 0.08 275);
+  --page-background: radial-gradient(circle at 50% -10%, oklch(0.27 0.09 275), transparent 42%), oklch(0.12 0.03 275);
+  --instrument-color: oklch(0.73 0.13 275 / 0.13);
 }
 
 .instrument-background {
@@ -35,8 +111,8 @@ body {
 
 .floating-instrument {
   position: absolute;
-  color: oklch(0.52 0.105 190 / 0.14);
-  filter: drop-shadow(0 12px 22px oklch(0.35 0.06 200 / 0.08));
+  color: var(--instrument-color);
+  filter: drop-shadow(0 12px 22px var(--instrument-shadow));
   animation: instrument-float 9s ease-in-out infinite;
 }
 
@@ -47,11 +123,6 @@ body {
   stroke-width: 2.3;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
-.dark .floating-instrument {
-  color: oklch(0.74 0.105 190 / 0.12);
-  filter: drop-shadow(0 12px 26px oklch(0 0 0 / 0.16));
 }
 
 .instrument-ruler {
@@ -133,11 +204,7 @@ body {
 
 @media (max-width: 900px) {
   .floating-instrument {
-    color: oklch(0.52 0.105 190 / 0.1);
-  }
-
-  .dark .floating-instrument {
-    color: oklch(0.74 0.105 190 / 0.09);
+    opacity: 0.72;
   }
 
   .instrument-tape,
@@ -177,4 +244,14 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.theme-select option {
+  color: oklch(0.279 0.041 260.031);
+  background-color: oklch(1 0 0);
+}
+
+.dark .theme-select option {
+  color: oklch(0.968 0.007 247.896);
+  background-color: oklch(0.208 0.042 265.755);
 }
