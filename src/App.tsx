@@ -60,7 +60,7 @@ export default function App() {
         <ConverterPanel categoryId={categoryId} onConvert={handleConvert} />
 
         <p className="mt-8 text-center text-sm text-slate-400 dark:text-slate-500">
-          11 categories · 80+ units · Instant conversion
+          12 categories · 90+ units · Instant conversion
         </p>
       </main>
 

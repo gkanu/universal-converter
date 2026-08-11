@@ -9,6 +9,7 @@ export type CategoryId =
   | 'data'
   | 'energy'
   | 'pressure'
+  | 'force'
   | 'angle'
 
 export interface Unit {
@@ -192,6 +193,24 @@ const pressure: Category = {
   ],
 }
 
+const force: Category = {
+  id: 'force',
+  label: 'Force',
+  icon: '⟶',
+  units: [
+    { id: 'N', name: 'Newton', symbol: 'N', factor: 1 },
+    { id: 'kN', name: 'Kilonewton', symbol: 'kN', factor: 1000 },
+    { id: 'MN', name: 'Meganewton', symbol: 'MN', factor: 1e6 },
+    { id: 'dyn', name: 'Dyne', symbol: 'dyn', factor: 1e-5 },
+    { id: 'gf', name: 'Gram-force', symbol: 'gf', factor: 0.00980665 },
+    { id: 'kgf', name: 'Kilogram-force', symbol: 'kgf', factor: 9.80665 },
+    { id: 'tf', name: 'Tonne-force', symbol: 'tf', factor: 9806.65 },
+    { id: 'ozf', name: 'Ounce-force', symbol: 'ozf', factor: 0.278013851 },
+    { id: 'lbf', name: 'Pound-force', symbol: 'lbf', factor: 4.4482216152605 },
+    { id: 'kip', name: 'Kip-force', symbol: 'kip', factor: 4448.2216152605 },
+  ],
+}
+
 const angle: Category = {
   id: 'angle',
   label: 'Angle',
@@ -217,6 +236,7 @@ export const categories: Category[] = [
   data,
   energy,
   pressure,
+  force,
   angle,
 ]
 
